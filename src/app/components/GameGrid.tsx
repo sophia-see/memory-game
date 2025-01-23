@@ -61,6 +61,7 @@ function GameValue (props: GameValueProps) {
                         height={1} 
                         className={`${isSmallGrid ? "p-3" : "p-[10px]"}`}
                         priority
+                        loading="eager"
                     /> 
                     : value 
                 : ""

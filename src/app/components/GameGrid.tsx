@@ -75,9 +75,9 @@ export default function GameGrid ({ currPlayer, setCurrPlayer }:GameGridProps) {
     const isSmallGrid = gridSize == 4;
 
     React.useEffect(() => {
-        if (selectedPair.length == 2) {
+        if (selectedPair.length == 2) {                
+            const isMatch = selectedPair[0] == selectedPair[1];
             const timerId = setTimeout(() => {
-                const isMatch = selectedPair[0] == selectedPair[1];
                 let newGame = [];
                 const playerCount = parseInt(gameSettings.playerCount);
 
@@ -116,7 +116,7 @@ export default function GameGrid ({ currPlayer, setCurrPlayer }:GameGridProps) {
 
                 setSelectedPair([]);
                 setGame(newGame)
-            }, 500)
+            }, isMatch ? 0 : 500)
 
             return () => clearTimeout(timerId);
         }

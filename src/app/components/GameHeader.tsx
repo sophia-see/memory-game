@@ -1,3 +1,4 @@
+import React from "react";
 import { useAppContext } from "../context/AppContext";
 import useDeviceSize from "../hooks/useDeviceSize"
 import { initializeGame } from "../utils";
@@ -28,6 +29,7 @@ function HeaderButton ({label, customStyle, onClick}: HeaderButton) {
 export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
     const { gameSettings, setGame, setIsRestarted, setPlayers, setIsStarted } = useAppContext();
     const { isMobile } = useDeviceSize();
+    const [isMenuOpened, setIsMenuOpened] = React.useState(false);
     const restartGame = () => {
         setIsRestarted(true);
 
@@ -39,6 +41,7 @@ export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
             playerCount: parseInt(gameSettings.playerCount),
             setPlayers: setPlayers
         })
+        setIsMenuOpened(false)
     }
 
     const newGame = () => {
@@ -53,7 +56,7 @@ export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
                 ?   <HeaderButton 
                         label="Menu" 
                         customStyle="bg-yellow-fda text-white-fcf" 
-                        onClick={() => {}}
+                        onClick={() => setIsMenuOpened(true)}
                     />
                 :   <div className="flex gap-4">
                         <HeaderButton 
@@ -68,6 +71,43 @@ export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
                         />
                     </div>
             }
+            {isMenuOpened && (
+                <div
+                    className="
+                        absolute inset-0 backdrop-brightness-50
+                        flex justify-center items-center
+                    "
+                >
+                    <div
+                        className="
+                            w-full
+                            mx-[24px] p-[24px]
+                            bg-white-f2f
+                            rounded-[10px]
+                            flex flex-col items-center justify-center gap-4
+                        "
+                    >
+                        <div 
+                            className="w-full text-center rounded-full py-[12px] font-bold text-[18px] text-white-fcf bg-yellow-fda"
+                            onClick={restartGame}
+                        >
+                            Restart
+                        </div>
+                        <div 
+                            className="w-full text-center rounded-full py-[12px] font-bold text-[18px] text-blue-304 bg-white-dfe"
+                            onClick={newGame}
+                        >
+                            New Game
+                        </div>
+                        <div 
+                            className="w-full text-center rounded-full py-[12px] font-bold text-[18px] text-blue-304 bg-white-dfe"
+                            onClick={() => setIsMenuOpened(false)}
+                        >
+                            Resume Game
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

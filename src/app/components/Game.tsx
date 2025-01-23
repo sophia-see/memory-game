@@ -13,7 +13,7 @@ interface GameProps {
 }
 
 export default function Game ({ gameIcons }: GameProps) {
-    const { isStarted, gameSettings, setPlayers, setGame } = useAppContext();
+    const { isStarted, gameSettings, setPlayers, setGame, isDone } = useAppContext();
     
     const [currPlayer, setCurrPlayer] = React.useState("1");
 
@@ -42,11 +42,16 @@ export default function Game ({ gameIcons }: GameProps) {
                 w-full min-h-screen max-w-[1110px] mx-auto
                 p-[24px] md:p-[40px]
                 flex flex-col justify-center
+                relative
             "
         >
             <GameHeader gameIcons={gameIcons}/>
             <GameGrid currPlayer={currPlayer} setCurrPlayer={setCurrPlayer} />
             <GameScoreboard currPlayer={currPlayer}/>
+
+            {isDone && (
+                <></>
+            )}
         </div>
     )
 }

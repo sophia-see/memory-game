@@ -59,7 +59,7 @@ function GameValue (props: GameValueProps) {
                         layout="responsive" 
                         width={1} 
                         height={1} 
-                        className="p-3"
+                        className={`${isSmallGrid ? "p-3" : "p-[10px]"}`}
                         priority
                     /> 
                     : value 

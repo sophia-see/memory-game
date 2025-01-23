@@ -12,7 +12,8 @@ export default {
         "white-fcf": "#FCFCFC",
         "white-f2f": "#F2F2F2",
 
-        "custom-yellow": "#FDA214",
+        "yellow-fda": "#FDA214",
+        "yellow-ffb": "#FFB84A",
 
         "blue-bcc": "#BCCED9",
         "blue-304": "#304859",

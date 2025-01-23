@@ -105,7 +105,7 @@ export default function Game ({ gameIcons }: GameProps) {
     return (
         <div
             className="
-                w-full min-h-screen max-w-[1110px] mx-auto
+                w-full min-h-dvh max-w-[1110px] mx-auto
                 p-[24px] md:p-[40px]
                 flex flex-col justify-center
             "

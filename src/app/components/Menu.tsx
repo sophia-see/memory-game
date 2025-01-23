@@ -79,7 +79,7 @@ export default function Menu () {
     return (
         <div 
             className="
-                min-h-screen
+                min-h-dvh
                 bg-blue-152 text-white-fcf
                 flex flex-col items-center justify-center gap-10
                 px-[24px] md:px-[60px]

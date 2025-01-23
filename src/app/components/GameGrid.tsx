@@ -60,6 +60,7 @@ function GameValue (props: GameValueProps) {
                         width={1} 
                         height={1} 
                         className="p-3"
+                        priority
                     /> 
                     : value 
                 : ""

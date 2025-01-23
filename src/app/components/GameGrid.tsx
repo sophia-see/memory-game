@@ -51,20 +51,18 @@ function GameValue (props: GameValueProps) {
 
             }}
         >
-            {isOpened || isSelected 
-                ? isSvg 
-                    ? <Image 
-                        src={`./images/${value}`} 
-                        alt="icon" 
-                        layout="responsive" 
-                        width={1} 
-                        height={1} 
-                        className={`${isSmallGrid ? "p-3" : "p-[10px]"}`}
-                        priority
-                        loading="eager"
-                    /> 
-                    : value 
-                : ""
+            {isSvg 
+                ? <Image 
+                    src={`./images/${value}`} 
+                    alt="icon" 
+                    layout="responsive" 
+                    width={1} 
+                    height={1} 
+                    className={`${isSmallGrid ? "p-3" : "p-[10px]"} ${isOpened || isSelected ? "" : "hidden"}`}
+                    priority
+                    loading="eager"
+                /> 
+                : isOpened || isSelected  ? value : ""
             }
         </div>
     )

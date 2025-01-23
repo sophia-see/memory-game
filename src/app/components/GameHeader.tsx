@@ -1,4 +1,6 @@
+import { useAppContext } from "../context/AppContext";
 import useDeviceSize from "../hooks/useDeviceSize"
+import { initializeGame } from "../utils";
 
 interface HeaderButton {
     label: string;
@@ -23,11 +25,17 @@ function HeaderButton ({label, customStyle, onClick}: HeaderButton) {
     )
 }
 
-export default function GameHeader () {
+export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
+    const { gameSettings, setGame } = useAppContext();
     const { isMobile } = useDeviceSize();
 
     const restartGame = () => {
-        
+        initializeGame({
+            size: gameSettings.gridSize,
+            gameIcons: gameIcons,
+            theme: gameSettings.theme,
+            setGame: setGame
+        })
     }
 
     return (
@@ -43,7 +51,7 @@ export default function GameHeader () {
                         <HeaderButton 
                             label="Restart" 
                             customStyle="bg-yellow-fda text-white-fcf" 
-                            onClick={() => {}}
+                            onClick={restartGame}
                         />
                         <HeaderButton 
                             label="New Game" 

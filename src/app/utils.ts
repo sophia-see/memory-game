@@ -47,3 +47,21 @@ export const formatTime = (seconds: number) => {
         return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
     }
 };
+
+export const initializeGame = ({size, theme, gameIcons, setGame}:{size: string, theme: string, gameIcons: string[], setGame: React.Dispatch<React.SetStateAction<GameState[][]>>}) => {
+    const gridSize = parseInt(size);
+    const isGameIcons = theme == "icons";
+
+    const valueSize = (gridSize ** 2) / 2
+    const icons = gameIcons.slice(0, valueSize);
+    const numbers = Array.from(Array(valueSize).keys()).map(i => `${i + 1}`);
+
+    const values = isGameIcons ? icons : numbers;
+    const shuffledValues = shuffleArray(values);
+
+    const gameValues = Array.from({ length: gridSize }, (_, rowIndex) =>
+        shuffledValues.slice(rowIndex * gridSize, rowIndex * gridSize + gridSize)
+    );
+    const gameArray = setupGame(gameValues);
+    setGame(gameArray);
+}

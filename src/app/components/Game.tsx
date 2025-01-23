@@ -28,9 +28,6 @@ export default function Game ({ gameIcons }: GameProps) {
         shuffledValues.slice(rowIndex * gridSize, rowIndex * gridSize + gridSize)
     );
     const gameArray = setupGame(gameValues);
-
-    const [movesCount, setMovesCount] = React.useState(0);
-    const [timePassed, setTimePassed] = React.useState(0);
     const [currPlayer, setCurrPlayer] = React.useState("1");
 
     React.useEffect(() => {

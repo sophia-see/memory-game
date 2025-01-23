@@ -31,11 +31,12 @@ function GameValue (props: GameValueProps) {
                 flex items-center justify-center
                 ${isSmallGrid ? "text-[40px]" : "text-[24px]"}
                 ${isOpened ? "bg-blue-bcc" : (isSelected ? "bg-yellow-fda" : "bg-blue-304")}
-                p-2 aspect-square max-w-[87px]
+                p-2 aspect-square
+                min-w-[45px] min-h-[45px] max-w-[87px]
                 rounded-full
             `}
             onClick={() => {
-                if (selectedPair.length < 2) {
+                if (selectedPair.length < 2 && !isSelected) {
                     const newState = JSON.parse(JSON.stringify(game));
                     
                     setSelectedPair([...selectedPair, value]);
@@ -56,7 +57,7 @@ function GameValue (props: GameValueProps) {
 }
 
 export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameGridProps) {
-    const { gameSettings, setPlayers } = useAppContext();
+    const { gameSettings, setPlayers, setIsDone } = useAppContext();
     const [game, setGame] = React.useState(gameArray);
     const [selectedPair, setSelectedPair] = React.useState<string[]>([]);
     const gridSize = parseInt(gameSettings.gridSize[0]);
@@ -78,13 +79,20 @@ export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameG
 
                     setPlayers((prevState) => prevState.map(item => ({
                         ...item,
-                        score: currPlayer == item.id ? item.score + 1 : item.score
+                        score: currPlayer == item.id ? item.score + 1 : item.score,
+                        moves: item.moves + 1
                     })))
                 } else {
                     newGame = game.map((row) => row.map(item => ({
                         ...item,
                         isSelected: false
                     })));
+
+                    setPlayers((prevState) => prevState.map(item => ({
+                        ...item,
+                        moves: item.moves + 1
+                    })))
+
                     setCurrPlayer(prev => {
                         let newNum = parseInt(prev) + 1;
 
@@ -94,7 +102,7 @@ export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameG
                         return newNum.toString();
                     })
                 }
-                
+
                 setSelectedPair([]);
                 setGame(newGame)
             }, 500)
@@ -102,7 +110,14 @@ export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameG
             return () => clearTimeout(timerId);
         }
 
-    }, [selectedPair, game, gameSettings, currPlayer])
+    }, [selectedPair, game, gameSettings, currPlayer]);
+
+    React.useEffect(() => {
+        const remainingUnmatched = game.flatMap(row => row).filter(i => !i.isOpened)
+        console.log({remainingUnmatched})
+        if (remainingUnmatched.length == 0)
+            setIsDone(true);
+    }, [game])
 
     return (
         <div className={`w-full flex-1 flex flex-col justify-center items-center ${isSmallGrid ? "gap-3" : "gap-2"} m-auto`}>

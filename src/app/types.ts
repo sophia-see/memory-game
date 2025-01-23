@@ -7,6 +7,7 @@ export type GameSettings = {
 export type PlayerStats = {
     id: "1" | "2" | "3" | "4";
     score: number;
+    moves: number;
 }
 
 export type GameState = {

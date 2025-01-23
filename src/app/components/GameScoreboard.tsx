@@ -1,18 +1,90 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
+import useTimer from "../hooks/useTimer";
 
 interface GameScoreboardProps {
     currPlayer: string;
 }
 
-export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {    
-    const { players } = useAppContext();
+interface PlayerCardProps {
+    id: string;
+    score: number;
+    isCurrentPlayer: boolean;
+}
 
-    console.log({players})
+function PlayerCard ({id, score, isCurrentPlayer}: PlayerCardProps) {
+    return (
+        <div 
+            className={`
+                flex-1
+                font-bold
+                ${isCurrentPlayer ? "bg-yellow-fda text-white-fcf" : "bg-white-dfe text-blue-304"}
+                flex flex-col items-center justify-center
+                py-[10px]
+                rounded-[5px]
+                relative
+            `}
+        >
+            {isCurrentPlayer && 
+                <div
+                    className="
+                        absolute 
+                        -top-2 left-1/2 
+                        transform -translate-x-1/2 
+                        w-0 h-0 
+                        border-l-[16px] border-l-transparent 
+                        border-r-[16px] border-r-transparent 
+                        border-b-[16px] 
+                        border-b-yellow-fda
+                    "
+                >
+                </div>
+            }
+            <div className={`text-[15px] ${isCurrentPlayer ? "" : "text-blue-719"}`}>P{id}</div>
+            <div className="text-[24px]">{score}</div>
+        </div>
+    )
+}
+
+interface GameCardProps {
+    label: string;
+    value: string;
+}
+
+function GameCard ({label, value}: GameCardProps) {
+    return (
+        <div 
+            className={`
+                flex-1
+                font-bold
+                bg-white-dfe text-blue-304
+                flex flex-col items-center justify-center
+                py-[10px]
+                rounded-[5px]
+            `}
+        >
+            <div className={`text-[15px]`}>{label}</div>
+            <div className="text-[24px]">{value}</div>
+        </div>
+    )
+}
+
+export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {    
+    const { players, isDone } = useAppContext();
+    const isSinglePlayer = players.length == 1;
+    const timer = useTimer({isStopped: isDone});
 
     return (
-        <div>
-            currplayer: {currPlayer}
+        <div className="flex gap-[24px]">
+            {isSinglePlayer
+                ?   <>
+                        <GameCard label="Time" value={timer ? timer : "0"} />
+                        <GameCard label="Moves" value={players[0].moves.toString()} />
+                    </>
+                : players.map((player, index) => (
+                    <PlayerCard id={player.id} score={player.score} isCurrentPlayer={currPlayer == player.id} />
+                ))
+            }
         </div>
     )
 }

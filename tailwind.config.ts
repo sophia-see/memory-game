@@ -11,6 +11,7 @@ export default {
       colors: {
         "white-fcf": "#FCFCFC",
         "white-f2f": "#F2F2F2",
+        "white-dfe": "#DFE7EC",
 
         "yellow-fda": "#FDA214",
         "yellow-ffb": "#FFB84A",

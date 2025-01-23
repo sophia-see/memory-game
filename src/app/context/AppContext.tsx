@@ -6,6 +6,8 @@ import React from "react";
 interface AppContextProps {
     isStarted: boolean;
     setIsStarted: (isStarted: boolean) => void;
+    isDone: boolean;
+    setIsDone: (isDone: boolean) => void;
     gameSettings: GameSettings;
     setGameSettings: (menu: GameSettings) => void;
     players: PlayerStats[];
@@ -20,6 +22,7 @@ interface AppProviderProps {
 
 export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
     const [isStarted, setIsStarted] = useState<boolean>(false);
+    const [isDone, setIsDone] = useState<boolean>(false);
     const [gameSettings, setGameSettings] = useState<GameSettings>({
         theme: "numbers",
         playerCount: "1",
@@ -28,7 +31,7 @@ export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
     const [players, setPlayers] = React.useState<PlayerStats[]>([]);
 
     return (
-        <AppContext.Provider value={{isStarted, setIsStarted, gameSettings, setGameSettings, players, setPlayers}}>
+        <AppContext.Provider value={{isStarted, setIsStarted, isDone, setIsDone, gameSettings, setGameSettings, players, setPlayers}}>
             {children}
         </AppContext.Provider>
     )

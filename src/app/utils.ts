@@ -29,6 +29,21 @@ export function setupGame(array: string[][]) {
 export function setupPlayerStats(playerCount: number) {
     return Array.apply(null, Array(playerCount)).map((_, i) => ({
         id: `${i + 1}`,
-        score: 0
+        score: 0,
+        moves: 0
     }) as PlayerStats);
 }
+
+// Format time into dd:hh:mm:ss
+export const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    // Dynamically format based on availability
+    if (hours > 0) {
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    } else {
+        return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+};

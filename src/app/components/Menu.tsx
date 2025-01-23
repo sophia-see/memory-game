@@ -6,7 +6,7 @@ interface ManuLabelProps {
     label: string
 }
 
-function MenuLabel ({label}: ManuLabelProps) {
+function MenuLabel ({label}: Readonly<ManuLabelProps>) {
     return (
         <div className="font-bold text-[15px] text-blue-719">
             {label}
@@ -18,7 +18,7 @@ interface MenuValuesProps {
     children: ReactNode
 }
 
-function MenuValues ({children}: MenuValuesProps) {
+function MenuValues ({children}: Readonly<MenuValuesProps>) {
     return (
         <div className="flex gap-2 justify-between">
             {children}
@@ -33,7 +33,7 @@ interface MenuValueProps {
     settings: MenuSettings;
 }
 
-function MenuValue ({ value, setValue, settingsKey, settings}: MenuValueProps) {
+function MenuValue ({ value, setValue, settingsKey, settings}: Readonly<MenuValueProps>) {
     const lowerCasedValue = value.toLowerCase();
     const selectedValue = settings[settingsKey as keyof MenuSettings];
     const isSelected = lowerCasedValue == selectedValue;
@@ -60,7 +60,11 @@ function MenuValue ({ value, setValue, settingsKey, settings}: MenuValueProps) {
     )
 }
 
-function MenuItem ({children}: {children: ReactNode}) {
+interface MenuItemProps {
+    children: ReactNode
+}
+
+function MenuItem ({children}: Readonly<MenuItemProps>) {
     return (
         <div className="flex flex-col gap-[11px]">
             {children}

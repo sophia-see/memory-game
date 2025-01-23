@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext"
 import { GameState } from "../types";
-import { setupGame, shuffleArray } from "../utils";
 
 interface GameGridProps {
     gameArray: GameState[][];
@@ -68,7 +67,7 @@ export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameG
             const timerId = setTimeout(() => {
                 const isMatch = selectedPair[0] == selectedPair[1];
                 let newGame = [];
-                let playerCount = parseInt(gameSettings.playerCount);
+                const playerCount = parseInt(gameSettings.playerCount);
 
                 if (isMatch) {
                     newGame = game.map((row) => row.map(item => ({
@@ -110,14 +109,13 @@ export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameG
             return () => clearTimeout(timerId);
         }
 
-    }, [selectedPair, game, gameSettings, currPlayer]);
+    }, [selectedPair, game, gameSettings, currPlayer, setCurrPlayer, setPlayers]);
 
     React.useEffect(() => {
         const remainingUnmatched = game.flatMap(row => row).filter(i => !i.isOpened)
-        console.log({remainingUnmatched})
         if (remainingUnmatched.length == 0)
             setIsDone(true);
-    }, [game])
+    }, [game, setIsDone])
 
     return (
         <div className={`w-full flex-1 flex flex-col justify-center items-center ${isSmallGrid ? "gap-3" : "gap-2"} m-auto`}>

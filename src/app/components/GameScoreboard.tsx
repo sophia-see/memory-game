@@ -82,7 +82,12 @@ export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {
                         <GameCard label="Moves" value={players[0].moves.toString()} />
                     </>
                 : players.map((player, index) => (
-                    <PlayerCard id={player.id} score={player.score} isCurrentPlayer={currPlayer == player.id} />
+                    <PlayerCard 
+                        id={player.id} 
+                        score={player.score} 
+                        isCurrentPlayer={currPlayer == player.id} 
+                        key={index}
+                    />
                 ))
             }
         </div>

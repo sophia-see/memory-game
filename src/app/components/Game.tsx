@@ -33,7 +33,7 @@ export default function Game ({ gameIcons }: GameProps) {
     React.useEffect(() => {
         const playerStats = setupPlayerStats(parseInt(gameSettings.playerCount));
         setPlayers(playerStats);
-    }, [gameSettings.playerCount])
+    }, [gameSettings.playerCount, setPlayers])
 
     if (!isStarted)
         return <Menu />

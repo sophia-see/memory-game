@@ -1,7 +1,7 @@
 import { GameState, PlayerStats } from "./types";
 
 export function shuffleArray(array: string[]) {
-    let duplicateValues = [];
+    const duplicateValues = [];
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
@@ -27,7 +27,7 @@ export function setupGame(array: string[][]) {
 }
 
 export function setupPlayerStats(playerCount: number) {
-    return Array.apply(null, Array(playerCount)).map((_, i) => ({
+    return [...new Array(playerCount)].map((_, i) => ({
         id: `${i + 1}`,
         score: 0,
         moves: 0

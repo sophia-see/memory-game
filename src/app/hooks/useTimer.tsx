@@ -16,7 +16,7 @@ export default function useTimer ({isStopped}: TimerProps) {
                 setElapsedTime((prev) => prev + 1);
             }, 1000);
         } else {
-            interval && clearInterval(interval);
+            clearInterval(interval);
         }
 
         return () => clearInterval(interval); // Cleanup on component unmount

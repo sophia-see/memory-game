@@ -26,7 +26,7 @@ function HeaderButton ({label, customStyle, onClick}: HeaderButton) {
     )
 }
 
-export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
+export default function GameHeader ({gameIcons, setCurrPlayer}: {gameIcons: string[], setCurrPlayer: React.Dispatch<React.SetStateAction<string>>}) {
     const { gameSettings, setGame, setIsRestarted, setPlayers, setIsStarted } = useAppContext();
     const { isMobile } = useDeviceSize();
     const [isMenuOpened, setIsMenuOpened] = React.useState(false);
@@ -42,6 +42,7 @@ export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
             setPlayers: setPlayers
         })
         setIsMenuOpened(false)
+        setCurrPlayer("1")
     }
 
     const newGame = () => {
@@ -76,6 +77,7 @@ export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
                     className="
                         absolute inset-0 backdrop-brightness-50
                         flex justify-center items-center
+                        z-10
                     "
                 >
                     <div

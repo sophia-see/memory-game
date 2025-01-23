@@ -111,7 +111,7 @@ export default function Game ({ gameIcons }: GameProps) {
                 relative
             "
         >
-            <GameHeader gameIcons={gameIcons}/>
+            <GameHeader gameIcons={gameIcons} setCurrPlayer={setCurrPlayer}/>
             <GameGrid currPlayer={currPlayer} setCurrPlayer={setCurrPlayer} />
             <GameScoreboard currPlayer={currPlayer} timer={timer}/>
 
@@ -120,6 +120,7 @@ export default function Game ({ gameIcons }: GameProps) {
                     className="
                         absolute inset-0 backdrop-brightness-50
                         flex justify-center items-center
+                        z-20
                     "
                 >
                     <div

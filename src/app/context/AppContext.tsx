@@ -16,7 +16,6 @@ interface AppContextProps {
     setPlayers: React.Dispatch<React.SetStateAction<PlayerStats[]>>; 
     game: GameState[][];
     setGame: React.Dispatch<React.SetStateAction<GameState[][]>>;
-
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);

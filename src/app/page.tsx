@@ -1,18 +1,11 @@
-"use client"
-
+import fs from "fs";
+import path from "path";
 import Game from "./components/Game";
-import Menu from "./components/Menu";
-import { useAppContext } from "./context/AppContext";
 
 export default function Home() {
-  const { isStarted } = useAppContext();
+  const imagesDirectory = path.join(process.cwd(), "public/images");
+  const allFiles = fs.readdirSync(imagesDirectory);
+  const gameIcons = allFiles.filter((file) => file.endsWith(".svg"));
 
-  return (
-    <div>
-      {isStarted 
-        ? <Game />
-        : <Menu />
-      }
-    </div>
-  );
+  return <Game gameIcons={gameIcons}/>;
 }

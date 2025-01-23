@@ -1,12 +1,12 @@
 "use client"
 import { createContext, ReactNode, useContext, useState } from "react";
-import { MenuSettings } from "../types";
+import { GameSettings } from "../types";
 
 interface AppContextProps {
     isStarted: boolean;
     setIsStarted: (isStarted: boolean) => void;
-    menuSettings: MenuSettings;
-    setMenuSettings: (menu: MenuSettings) => void;
+    gameSettings: GameSettings;
+    setGameSettings: (menu: GameSettings) => void;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -17,14 +17,14 @@ interface AppProviderProps {
 
 export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
     const [isStarted, setIsStarted] = useState<boolean>(false);
-    const [menuSettings, setMenuSettings] = useState<MenuSettings>({
+    const [gameSettings, setGameSettings] = useState<GameSettings>({
         theme: "numbers",
         playerCount: "1",
         gridSize: "4x4"
     });
 
     return (
-        <AppContext.Provider value={{isStarted, setIsStarted, menuSettings, setMenuSettings}}>
+        <AppContext.Provider value={{isStarted, setIsStarted, gameSettings, setGameSettings}}>
             {children}
         </AppContext.Provider>
     )

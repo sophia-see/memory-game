@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { useAppContext } from "../context/AppContext"
-import { MenuSettings } from "../types"
+import { GameSettings } from "../types"
 
 interface ManuLabelProps {
     label: string
@@ -28,14 +28,14 @@ function MenuValues ({children}: Readonly<MenuValuesProps>) {
 
 interface MenuValueProps {
     value: string;
-    setValue: (menu: MenuSettings) => void;
+    setValue: (menu: GameSettings) => void;
     settingsKey: string;
-    settings: MenuSettings;
+    settings: GameSettings;
 }
 
 function MenuValue ({ value, setValue, settingsKey, settings}: Readonly<MenuValueProps>) {
     const lowerCasedValue = value.toLowerCase();
-    const selectedValue = settings[settingsKey as keyof MenuSettings];
+    const selectedValue = settings[settingsKey as keyof GameSettings];
     const isSelected = lowerCasedValue == selectedValue;
 
     return (
@@ -74,7 +74,7 @@ function MenuItem ({children}: Readonly<MenuItemProps>) {
 }
 
 export default function Menu () {
-    const { menuSettings, setMenuSettings, setIsStarted } = useAppContext();
+    const { gameSettings, setGameSettings, setIsStarted } = useAppContext();
 
     return (
         <div 
@@ -105,24 +105,24 @@ export default function Menu () {
                     <MenuItem>
                         <MenuLabel label="Select Theme" />
                         <MenuValues>
-                            <MenuValue value="Numbers" setValue={setMenuSettings} settingsKey={"theme"} settings={menuSettings} />
-                            <MenuValue value="Icons" setValue={setMenuSettings} settingsKey={"theme"} settings={menuSettings}/>
+                            <MenuValue value="Numbers" setValue={setGameSettings} settingsKey={"theme"} settings={gameSettings} />
+                            <MenuValue value="Icons" setValue={setGameSettings} settingsKey={"theme"} settings={gameSettings}/>
                         </MenuValues>
                     </MenuItem>
                     <MenuItem>
                         <MenuLabel label="Number of Players" />
                         <MenuValues>
-                            <MenuValue value="1" setValue={setMenuSettings} settingsKey={"playerCount"} settings={menuSettings} />
-                            <MenuValue value="2" setValue={setMenuSettings} settingsKey={"playerCount"} settings={menuSettings} />
-                            <MenuValue value="3" setValue={setMenuSettings} settingsKey={"playerCount"} settings={menuSettings} />
-                            <MenuValue value="4" setValue={setMenuSettings} settingsKey={"playerCount"} settings={menuSettings} />
+                            <MenuValue value="1" setValue={setGameSettings} settingsKey={"playerCount"} settings={gameSettings} />
+                            <MenuValue value="2" setValue={setGameSettings} settingsKey={"playerCount"} settings={gameSettings} />
+                            <MenuValue value="3" setValue={setGameSettings} settingsKey={"playerCount"} settings={gameSettings} />
+                            <MenuValue value="4" setValue={setGameSettings} settingsKey={"playerCount"} settings={gameSettings} />
                         </MenuValues>
                     </MenuItem>
                     <MenuItem>
                         <MenuLabel label="Grid Size" />
                         <MenuValues>
-                            <MenuValue value="4x4" setValue={setMenuSettings} settingsKey={"gridSize"} settings={menuSettings} />
-                            <MenuValue value="6x6" setValue={setMenuSettings} settingsKey={"gridSize"} settings={menuSettings}/>
+                            <MenuValue value="4x4" setValue={setGameSettings} settingsKey={"gridSize"} settings={gameSettings} />
+                            <MenuValue value="6x6" setValue={setGameSettings} settingsKey={"gridSize"} settings={gameSettings}/>
                         </MenuValues>
                     </MenuItem>
                 </div>

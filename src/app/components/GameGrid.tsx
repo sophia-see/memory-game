@@ -89,7 +89,7 @@ export default function GameGrid ({ gameArray }:GameGridProps) {
     }, [selectedPair, game])
 
     return (
-        <div className={`flex flex-col ${isSmallGrid ? "gap-3" : "gap-2"}`}>
+        <div className={`flex-1 flex flex-col justify-center ${isSmallGrid ? "gap-3" : "gap-2"} m-auto`}>
             {game.map((row, rowIndex) => {
                 return (
                     <div 

@@ -6,6 +6,7 @@ import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import Menu from "./Menu";
 import { setupGame, shuffleArray } from "../utils";
+import GameScoreboard from "./GameScoreboard";
 
 interface GameProps {
     gameIcons: string[];
@@ -38,13 +39,14 @@ export default function Game ({ gameIcons }: GameProps) {
     return (
         <div
             className="
-                w-full
+                w-full min-h-screen
                 p-[24px]
-                flex flex-col
+                flex flex-col justify-center
             "
         >
             <GameHeader />
             <GameGrid gameArray={gameArray}/>
+            <GameScoreboard />
         </div>
     )
 }

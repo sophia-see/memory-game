@@ -1,6 +1,5 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
-import useTimer from "../hooks/useTimer";
 import useDeviceSize from "../hooks/useDeviceSize";
 
 interface GameScoreboardProps {
@@ -74,7 +73,7 @@ function GameCard ({label, value}: GameCardProps) {
 }
 
 export default function GameScoreboard ({currPlayer, timer}: GameScoreboardProps) {    
-    const { players, isDone, isRestarted } = useAppContext();
+    const { players } = useAppContext();
     const { isMobile } = useDeviceSize();
     const isSinglePlayer = players.length == 1;
 

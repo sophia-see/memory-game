@@ -58,7 +58,7 @@ function GameValue (props: GameValueProps) {
                     layout="responsive" 
                     width={1} 
                     height={1} 
-                    className={`${isSmallGrid ? "p-3" : "p-[10px]"} ${isOpened || isSelected ? "" : "hidden"}`}
+                    className={`${isSmallGrid ? "p-3" : "p-[6px]"} ${isOpened || isSelected ? "" : "hidden"}`}
                     priority
                     loading="eager"
                 /> 

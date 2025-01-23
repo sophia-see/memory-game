@@ -7,50 +7,52 @@ import GameGrid from "./GameGrid";
 import Menu from "./Menu";
 import { getFinalResult, initializeGame, setupPlayerStats } from "../utils";
 import GameScoreboard from "./GameScoreboard";
+import useTimer from "../hooks/useTimer";
 
 interface GameProps {
     gameIcons: string[];
 }
 
 interface PlayerResultProps {
-    id: string;
-    score: number;
-    isWinner: boolean;
+    label: string;
+    value: string;
+    isHighlight: boolean;
 }
 
-function PlayerResult ({id, score, isWinner}: PlayerResultProps) {
+function PlayerResult ({label, value, isHighlight}: PlayerResultProps) {
     return (
         <div 
             className={`
                 p-4
                 flex justify-between items-center
-                ${isWinner ? "bg-blue-152 text-white-fcf" : "bg-white-dfe text-blue-304"}
+                ${isHighlight ? "bg-blue-152 text-white-fcf" : "bg-white-dfe text-blue-304"}
                 rounded-[5px]
             `}
         >
             <div 
                 className={`
-                    ${isWinner ? "" : "text-blue-719"}
+                    ${isHighlight ? "" : "text-blue-719"}
                     font-bold text-[13px]
                 `}
             >
-                Player {id} {isWinner ? "(Winner!)" : ""}
+                {label} {isHighlight ? "(Winner!)" : ""}
             </div>
             <div
                 className={`
                     font-bold text-[20px]
                 `}
             >
-                {score} Pairs
+                {value}
             </div>
         </div>
     )
 }
 
 export default function Game ({ gameIcons }: GameProps) {
-    const { isStarted, gameSettings, players, setPlayers, setGame, isDone } = useAppContext();
+    const { isStarted, gameSettings, players, setPlayers, setGame, isDone, isRestarted, setIsRestarted, setIsStarted, setIsDone } = useAppContext();
     
     const [currPlayer, setCurrPlayer] = React.useState("1");
+    const timer = useTimer({isStopped: isDone, isRestarted: isRestarted || !isStarted});
 
     React.useEffect(() => {
         initializeGame({
@@ -70,12 +72,32 @@ export default function Game ({ gameIcons }: GameProps) {
 
     const finalResult = React.useMemo(() => {
         if (isDone && players) {
-            const { topPlayers, sortedPlayers, isTie } = getFinalResult({players});
+            const { topPlayers, sortedPlayers, isTie, isSinglePlayer } = getFinalResult({players});
 
-            return { topPlayers, sortedPlayers, isTie };
+            return { topPlayers, sortedPlayers, isTie, isSinglePlayer };
         }
         return null;
-    }, [players, isDone])
+    }, [players, isDone]);
+
+    const restartGame = () => {
+        setIsRestarted(true);
+
+        initializeGame({
+            size: gameSettings.gridSize,
+            gameIcons: gameIcons,
+            theme: gameSettings.theme,
+            setGame: setGame,
+            playerCount: parseInt(gameSettings.playerCount),
+            setPlayers: setPlayers
+        })
+
+        setIsDone(false);
+    }
+
+    const newGame = () => {
+        restartGame();
+        setIsStarted(false)
+    }
 
     if (!isStarted)
         return <Menu />
@@ -91,7 +113,7 @@ export default function Game ({ gameIcons }: GameProps) {
         >
             <GameHeader gameIcons={gameIcons}/>
             <GameGrid currPlayer={currPlayer} setCurrPlayer={setCurrPlayer} />
-            <GameScoreboard currPlayer={currPlayer}/>
+            <GameScoreboard currPlayer={currPlayer} timer={timer}/>
 
             {isDone && (
                 <div
@@ -110,31 +132,74 @@ export default function Game ({ gameIcons }: GameProps) {
                         "
                     >
                         <div className="flex flex-col gap-2 items-center w-full">
-                            <div
-                                className="
-                                    font-bold text-[24px]
-                                "
-                            >
-                                {finalResult?.isTie ? "It's a tie!" : `Player ${finalResult?.topPlayers[0].id} wins!`}
-                            </div>
-                            <div className="font-bold text-[14px] text-blue-719">
-                                Game over! Here are the results…
-                            </div>
+                            {finalResult?.isSinglePlayer 
+                                ?   <>
+                                        <div
+                                            className="
+                                                font-bold text-[24px]
+                                            "
+                                        >
+                                            You did it!
+                                        </div>
+                                        <div className="font-bold text-[14px] text-blue-719">
+                                            Game over! Here’s how you got on…
+                                        </div>
+                                    </>
+                                :   <>
+                                        <div
+                                            className="
+                                                font-bold text-[24px]
+                                            "
+                                        >
+                                            {finalResult?.isTie ? "It's a tie!" : `Player ${finalResult?.topPlayers[0].id} wins!`}
+                                        </div>
+                                        <div className="font-bold text-[14px] text-blue-719">
+                                            Game over! Here are the results…
+                                        </div>
+                                    </>
+                            }
                         </div>
                         <div className="flex flex-col gap-2 w-full">
-                            {finalResult?.sortedPlayers.map((player) => {
-                                const isTopPlayer = finalResult.topPlayers.find(i => i.id == player.id);
-
-                                return (
-                                    <PlayerResult id={player.id} score={player.score} isWinner={!!isTopPlayer} key={player.id}/>
-                                )
-                            })}                        
+                            {finalResult?.isSinglePlayer
+                                ?   <>
+                                        <PlayerResult 
+                                            label={"Time Elapsed"} 
+                                            value={timer} 
+                                            isHighlight={false} 
+                                            key={"time"}
+                                        />
+                                        <PlayerResult 
+                                            label={"Moves Taken"} 
+                                            value={`${finalResult.topPlayers[0].moves} Moves`} 
+                                            isHighlight={false} 
+                                            key={"moves"}
+                                        />
+                                    </>
+                                : finalResult?.sortedPlayers.map((player) => {
+                                    const isTopPlayer = finalResult.topPlayers.find(i => i.id == player.id);
+    
+                                    return (
+                                        <PlayerResult 
+                                            label={`Player ${player.id}`} 
+                                            value={`${player.score} Pairs`} 
+                                            isHighlight={!!isTopPlayer} 
+                                            key={player.id}
+                                        />
+                                    )
+                                })
+                            }                  
                         </div>
                         <div className="flex flex-col gap-4 w-full">
-                            <div className="w-full rounded-full py-[12px] text-center bg-yellow-fda text-white-fcf">
+                            <div 
+                                className="w-full rounded-full py-[12px] text-center bg-yellow-fda text-white-fcf"
+                                onClick={restartGame}
+                            >
                                 Restart
                             </div>
-                            <div className="w-full rounded-full py-[12px] text-center bg-white-dfe text-blue-304">
+                            <div 
+                                className="w-full rounded-full py-[12px] text-center bg-white-dfe text-blue-304"
+                                onClick={newGame}
+                            >
                                 Setup New Game
                             </div>
                         </div>

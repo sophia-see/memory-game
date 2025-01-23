@@ -84,6 +84,7 @@ export const getFinalResult = ({players}: {players: PlayerStats[]}) => {
 
     const topPlayers = sortedPlayers.filter(i => i.score == topScore);
     const isTie = topPlayers.length > 1;
+    const isSinglePlayer = players.length == 1;
 
-    return {topPlayers, sortedPlayers, isTie}
+    return {topPlayers, sortedPlayers, isTie, isSinglePlayer}
 }

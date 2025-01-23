@@ -5,6 +5,7 @@ import useDeviceSize from "../hooks/useDeviceSize";
 
 interface GameScoreboardProps {
     currPlayer: string;
+    timer: string;
 }
 
 interface PlayerCardProps {
@@ -72,11 +73,10 @@ function GameCard ({label, value}: GameCardProps) {
     )
 }
 
-export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {    
+export default function GameScoreboard ({currPlayer, timer}: GameScoreboardProps) {    
     const { players, isDone, isRestarted } = useAppContext();
     const { isMobile } = useDeviceSize();
     const isSinglePlayer = players.length == 1;
-    const timer = useTimer({isStopped: isDone, isRestarted});
 
     return (
         <div className="flex justify-center gap-[24px] md:gap-[30px]">

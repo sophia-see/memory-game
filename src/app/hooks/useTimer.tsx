@@ -14,8 +14,6 @@ export default function useTimer ({isStopped, isRestarted}: TimerProps) {
     React.useEffect(() => {
         let interval:NodeJS.Timeout | undefined = undefined;
 
-        console.log({isRestarted})
-
         if (isRestarted) {
             setElapsedTime(0);
             setIsRestarted(false);
@@ -31,10 +29,6 @@ export default function useTimer ({isStopped, isRestarted}: TimerProps) {
 
         return () => clearInterval(interval); // Cleanup on component unmount
     }, [isStopped, isRestarted, setIsRestarted]);
-
-    React.useEffect(() => {
-        console.log({elapsedTime})
-    }, [elapsedTime])
 
     return formatTime(elapsedTime);
 }

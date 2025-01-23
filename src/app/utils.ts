@@ -77,3 +77,13 @@ export const initializeGame = ({size, theme, gameIcons, setGame, playerCount, se
     const playerStats = setupPlayerStats(playerCount);
     setPlayers(playerStats);
 }
+
+export const getFinalResult = ({players}: {players: PlayerStats[]}) => {
+    const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
+    const topScore = sortedPlayers[0].score;
+
+    const topPlayers = sortedPlayers.filter(i => i.score == topScore);
+    const isTie = topPlayers.length > 1;
+
+    return {topPlayers, sortedPlayers, isTie}
+}

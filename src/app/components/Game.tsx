@@ -5,16 +5,15 @@ import { useAppContext } from "../context/AppContext"
 import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import Menu from "./Menu";
-import { initializeGame, setupGame, setupPlayerStats, shuffleArray } from "../utils";
+import { initializeGame, setupPlayerStats } from "../utils";
 import GameScoreboard from "./GameScoreboard";
-import { GameState } from "../types";
 
 interface GameProps {
     gameIcons: string[];
 }
 
 export default function Game ({ gameIcons }: GameProps) {
-    const { isStarted, gameSettings, setPlayers, setGame, setIsRestarted } = useAppContext();
+    const { isStarted, gameSettings, setPlayers, setGame } = useAppContext();
     
     const [currPlayer, setCurrPlayer] = React.useState("1");
 

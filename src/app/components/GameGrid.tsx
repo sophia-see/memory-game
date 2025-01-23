@@ -108,7 +108,7 @@ export default function GameGrid ({ currPlayer, setCurrPlayer }:GameGridProps) {
             return () => clearTimeout(timerId);
         }
 
-    }, [selectedPair, game, gameSettings, currPlayer, setCurrPlayer, setPlayers]);
+    }, [selectedPair, game, gameSettings, currPlayer, setCurrPlayer, setPlayers, setGame]);
 
     React.useEffect(() => {
         const remainingUnmatched = game.flatMap(row => row).filter(i => !i.isOpened)

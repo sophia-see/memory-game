@@ -30,7 +30,7 @@ export default function useTimer ({isStopped, isRestarted}: TimerProps) {
         }
 
         return () => clearInterval(interval); // Cleanup on component unmount
-    }, [isStopped, isRestarted]);
+    }, [isStopped, isRestarted, setIsRestarted]);
 
     React.useEffect(() => {
         console.log({elapsedTime})

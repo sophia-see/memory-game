@@ -28,8 +28,9 @@ function GameValue (props: GameValueProps) {
             className={`
                 font-bold
                 flex items-center justify-center
-                ${isSmallGrid ? "text-[40px]" : "text-[24px]"}
-                ${isOpened ? "bg-blue-bcc" : (isSelected ? "bg-yellow-fda" : "bg-blue-304")}
+                ${isSmallGrid ? "text-[40px] md:text-[56px]" : "text-[24px] md:text-[44px]"}
+                ${isOpened ? "bg-blue-bcc" : (isSelected ? "bg-yellow-fda" : "bg-blue-304 cursor-pointer")}
+                text-white-fcf
                 p-2 aspect-square
                 min-w-[45px] min-h-[45px] max-w-[87px]
                 rounded-full
@@ -118,7 +119,7 @@ export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameG
     }, [game, setIsDone])
 
     return (
-        <div className={`w-full flex-1 flex flex-col justify-center items-center ${isSmallGrid ? "gap-3" : "gap-2"} m-auto`}>
+        <div className={`w-full flex-1 flex flex-col justify-center items-center ${isSmallGrid ? "gap-3" : "gap-2"} my-[50px] mx-auto`}>
             {game.map((row, rowIndex) => {
                 return (
                     <div 

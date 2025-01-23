@@ -55,16 +55,17 @@ function GameCard ({label, value}: GameCardProps) {
     return (
         <div 
             className={`
+                max-w-[255px]
                 flex-1
                 font-bold
                 bg-white-dfe text-blue-304
-                flex flex-col items-center justify-center
+                flex flex-col items-center justify-center md:flex-row md:justify-between md:p-[24px]
                 py-[10px]
                 rounded-[5px]
             `}
         >
-            <div className={`text-[15px]`}>{label}</div>
-            <div className="text-[24px]">{value}</div>
+            <div className={`text-[15px] md:text-[18px]`}>{label}</div>
+            <div className="text-[24px] md:text-[32px]">{value}</div>
         </div>
     )
 }
@@ -75,7 +76,7 @@ export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {
     const timer = useTimer({isStopped: isDone});
 
     return (
-        <div className="flex gap-[24px]">
+        <div className="flex justify-center gap-[24px] md:gap-[30px]">
             {isSinglePlayer
                 ?   <>
                         <GameCard label="Time" value={timer ? timer : "0"} />

@@ -1,4 +1,4 @@
-import { GameState } from "./types";
+import { GameState, PlayerStats } from "./types";
 
 export function shuffleArray(array: string[]) {
     let duplicateValues = [];
@@ -24,4 +24,11 @@ export function setupGame(array: string[][]) {
             isSelected: false
         }) as GameState)
     })
+}
+
+export function setupPlayerStats(playerCount: number) {
+    return Array.apply(null, Array(playerCount)).map((_, i) => ({
+        id: `${i + 1}`,
+        score: 0
+    }) as PlayerStats);
 }

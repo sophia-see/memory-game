@@ -5,6 +5,8 @@ import { setupGame, shuffleArray } from "../utils";
 
 interface GameGridProps {
     gameArray: GameState[][];
+    currPlayer: string;
+    setCurrPlayer: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface GameValueProps {
@@ -53,8 +55,8 @@ function GameValue (props: GameValueProps) {
     )
 }
 
-export default function GameGrid ({ gameArray }:GameGridProps) {
-    const { gameSettings } = useAppContext();
+export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameGridProps) {
+    const { gameSettings, setPlayers } = useAppContext();
     const [game, setGame] = React.useState(gameArray);
     const [selectedPair, setSelectedPair] = React.useState<string[]>([]);
     const gridSize = parseInt(gameSettings.gridSize[0]);
@@ -65,6 +67,7 @@ export default function GameGrid ({ gameArray }:GameGridProps) {
             const timerId = setTimeout(() => {
                 const isMatch = selectedPair[0] == selectedPair[1];
                 let newGame = [];
+                let playerCount = parseInt(gameSettings.playerCount);
 
                 if (isMatch) {
                     newGame = game.map((row) => row.map(item => ({
@@ -72,11 +75,24 @@ export default function GameGrid ({ gameArray }:GameGridProps) {
                         isSelected: false,
                         isOpened: item.isOpened ? item.isOpened : selectedPair[0] == item.value
                     })));
+
+                    setPlayers((prevState) => prevState.map(item => ({
+                        ...item,
+                        score: currPlayer == item.id ? item.score + 1 : item.score
+                    })))
                 } else {
                     newGame = game.map((row) => row.map(item => ({
                         ...item,
                         isSelected: false
                     })));
+                    setCurrPlayer(prev => {
+                        let newNum = parseInt(prev) + 1;
+
+                        if (newNum > playerCount) newNum = newNum % playerCount
+                        if (newNum == 0) newNum = playerCount
+
+                        return newNum.toString();
+                    })
                 }
                 
                 setSelectedPair([]);
@@ -86,7 +102,7 @@ export default function GameGrid ({ gameArray }:GameGridProps) {
             return () => clearTimeout(timerId);
         }
 
-    }, [selectedPair, game])
+    }, [selectedPair, game, gameSettings, currPlayer])
 
     return (
         <div className={`w-full flex-1 flex flex-col justify-center items-center ${isSmallGrid ? "gap-3" : "gap-2"} m-auto`}>

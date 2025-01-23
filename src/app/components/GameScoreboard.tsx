@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
 import useTimer from "../hooks/useTimer";
+import useDeviceSize from "../hooks/useDeviceSize";
 
 interface GameScoreboardProps {
     currPlayer: string;
@@ -10,9 +11,10 @@ interface PlayerCardProps {
     id: string;
     score: number;
     isCurrentPlayer: boolean;
+    isMobile: boolean;
 }
 
-function PlayerCard ({id, score, isCurrentPlayer}: PlayerCardProps) {
+function PlayerCard ({id, score, isCurrentPlayer, isMobile}: PlayerCardProps) {
     return (
         <div 
             className={`
@@ -40,7 +42,7 @@ function PlayerCard ({id, score, isCurrentPlayer}: PlayerCardProps) {
                 >
                 </div>
             }
-            <div className={`text-[15px] ${isCurrentPlayer ? "" : "text-blue-719"}`}>P{id}</div>
+            <div className={`text-[15px] ${isCurrentPlayer ? "" : "text-blue-719"}`}>{isMobile ? "P" : "Player "}{id}</div>
             <div className="text-[24px]">{score}</div>
         </div>
     )
@@ -72,6 +74,7 @@ function GameCard ({label, value}: GameCardProps) {
 
 export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {    
     const { players, isDone } = useAppContext();
+    const { isMobile } = useDeviceSize();
     const isSinglePlayer = players.length == 1;
     const timer = useTimer({isStopped: isDone});
 
@@ -87,6 +90,7 @@ export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {
                         id={player.id} 
                         score={player.score} 
                         isCurrentPlayer={currPlayer == player.id} 
+                        isMobile={isMobile}
                         key={index}
                     />
                 ))

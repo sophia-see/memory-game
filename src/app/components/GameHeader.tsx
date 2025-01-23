@@ -1,17 +1,57 @@
+import useDeviceSize from "../hooks/useDeviceSize"
+
+interface HeaderButton {
+    label: string;
+    customStyle: string;
+    onClick: () => void;
+}
+
+function HeaderButton ({label, customStyle, onClick}: HeaderButton) {
+    return (
+        <div
+            className={`
+                ${customStyle}
+                font-bold text-[16px]
+                py-[10px] px-[18px]
+                rounded-full
+                cursor-pointer
+            `}
+            onClick={onClick}
+        >
+            {label}
+        </div>
+    )
+}
+
 export default function GameHeader () {
+    const { isMobile } = useDeviceSize();
+
+    const restartGame = () => {
+        
+    }
+
     return (
         <div className="flex justify-between">
             <div className="font-bold text-[24px]">memory</div>
-            <div
-                className="
-                    bg-yellow-fda text-white-fcf
-                    font-bold text-[16px]
-                    py-[10px] px-[18px]
-                    rounded-full
-                "
-            >
-                Menu
-            </div>
+            {isMobile 
+                ?   <HeaderButton 
+                        label="Menu" 
+                        customStyle="bg-yellow-fda text-white-fcf" 
+                        onClick={() => {}}
+                    />
+                :   <div className="flex gap-4">
+                        <HeaderButton 
+                            label="Restart" 
+                            customStyle="bg-yellow-fda text-white-fcf" 
+                            onClick={() => {}}
+                        />
+                        <HeaderButton 
+                            label="New Game" 
+                            customStyle="bg-white-dfe text-blue-304" 
+                            onClick={() => {}}
+                        />
+                    </div>
+            }
         </div>
     )
 }

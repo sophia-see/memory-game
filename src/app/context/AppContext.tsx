@@ -1,6 +1,6 @@
 "use client"
 import { createContext, ReactNode, useContext, useState } from "react";
-import { GameSettings, PlayerStats } from "../types";
+import { GameSettings, GameState, PlayerStats } from "../types";
 import React from "react";
 
 interface AppContextProps {
@@ -12,6 +12,8 @@ interface AppContextProps {
     setGameSettings: (menu: GameSettings) => void;
     players: PlayerStats[];
     setPlayers: React.Dispatch<React.SetStateAction<PlayerStats[]>>; 
+    game: GameState[][];
+    setGame: React.Dispatch<React.SetStateAction<GameState[][]>>;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -29,9 +31,17 @@ export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
         gridSize: "4x4"
     });
     const [players, setPlayers] = React.useState<PlayerStats[]>([]);
+    const [game, setGame] = React.useState<GameState[][]>([]);
 
     return (
-        <AppContext.Provider value={{isStarted, setIsStarted, isDone, setIsDone, gameSettings, setGameSettings, players, setPlayers}}>
+        <AppContext.Provider 
+            value={{
+                isStarted, setIsStarted, 
+                isDone, setIsDone, 
+                gameSettings, setGameSettings, 
+                players, setPlayers,
+                game, setGame
+            }}>
             {children}
         </AppContext.Provider>
     )

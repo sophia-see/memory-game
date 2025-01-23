@@ -13,22 +13,27 @@ interface GameProps {
 }
 
 export default function Game ({ gameIcons }: GameProps) {
-    const { isStarted, gameSettings, setPlayers } = useAppContext();
-    const gridSize = parseInt(gameSettings.gridSize[0]);
-    const isGameIcons = gameSettings.theme == "icons";
-
-    const valueSize = (gridSize ** 2) / 2
-    const icons = gameIcons.slice(0, valueSize);
-    const numbers = Array.from(Array(valueSize).keys()).map(i => `${i + 1}`);
-
-    const values = isGameIcons ? icons : numbers;
-    const shuffledValues = shuffleArray(values);
-
-    const gameValues = Array.from({ length: gridSize }, (_, rowIndex) =>
-        shuffledValues.slice(rowIndex * gridSize, rowIndex * gridSize + gridSize)
-    );
-    const gameArray = setupGame(gameValues);
+    const { isStarted, gameSettings, setPlayers, game, setGame } = useAppContext();
+    
     const [currPlayer, setCurrPlayer] = React.useState("1");
+
+    React.useEffect(() => {
+        const gridSize = parseInt(gameSettings.gridSize[0]);
+        const isGameIcons = gameSettings.theme == "icons";
+
+        const valueSize = (gridSize ** 2) / 2
+        const icons = gameIcons.slice(0, valueSize);
+        const numbers = Array.from(Array(valueSize).keys()).map(i => `${i + 1}`);
+
+        const values = isGameIcons ? icons : numbers;
+        const shuffledValues = shuffleArray(values);
+
+        const gameValues = Array.from({ length: gridSize }, (_, rowIndex) =>
+            shuffledValues.slice(rowIndex * gridSize, rowIndex * gridSize + gridSize)
+        );
+        const gameArray = setupGame(gameValues);
+        setGame(gameArray)
+    }, [gameSettings.gridSize, setGame])
 
     React.useEffect(() => {
         const playerStats = setupPlayerStats(parseInt(gameSettings.playerCount));
@@ -47,7 +52,7 @@ export default function Game ({ gameIcons }: GameProps) {
             "
         >
             <GameHeader />
-            <GameGrid currPlayer={currPlayer} setCurrPlayer={setCurrPlayer} gameArray={gameArray}/>
+            <GameGrid currPlayer={currPlayer} setCurrPlayer={setCurrPlayer} />
             <GameScoreboard currPlayer={currPlayer}/>
         </div>
     )

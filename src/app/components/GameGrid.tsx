@@ -3,7 +3,6 @@ import { useAppContext } from "../context/AppContext"
 import { GameState } from "../types";
 
 interface GameGridProps {
-    gameArray: GameState[][];
     currPlayer: string;
     setCurrPlayer: React.Dispatch<React.SetStateAction<string>>
 }
@@ -56,9 +55,8 @@ function GameValue (props: GameValueProps) {
     )
 }
 
-export default function GameGrid ({ gameArray, currPlayer, setCurrPlayer }:GameGridProps) {
-    const { gameSettings, setPlayers, setIsDone } = useAppContext();
-    const [game, setGame] = React.useState(gameArray);
+export default function GameGrid ({ currPlayer, setCurrPlayer }:GameGridProps) {
+    const { gameSettings, setPlayers, setIsDone, game, setGame } = useAppContext();
     const [selectedPair, setSelectedPair] = React.useState<string[]>([]);
     const gridSize = parseInt(gameSettings.gridSize[0]);
     const isSmallGrid = gridSize == 4;

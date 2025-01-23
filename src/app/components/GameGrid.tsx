@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext"
 import { GameState } from "../types";
+import Image from "next/image";
 
 interface GameGridProps {
     currPlayer: string;
@@ -21,7 +22,7 @@ function GameValue (props: GameValueProps) {
     const {rowIndex, colIndex, game, selectedPair, setSelectedPair, isSmallGrid, setGame} = props;
     const item = game[rowIndex][colIndex];
     const { value, isOpened, isSelected } = item;
-    
+    const isSvg = value.includes("svg");
     return (
         <div
             className={`
@@ -50,7 +51,19 @@ function GameValue (props: GameValueProps) {
 
             }}
         >
-            {isOpened || isSelected ? value : ""}
+            {isOpened || isSelected 
+                ? isSvg 
+                    ? <Image 
+                        src={`./images/${value}`} 
+                        alt="icon" 
+                        layout="responsive" 
+                        width={1} 
+                        height={1} 
+                        className="p-3"
+                    /> 
+                    : value 
+                : ""
+            }
         </div>
     )
 }

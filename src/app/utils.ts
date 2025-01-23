@@ -48,7 +48,16 @@ export const formatTime = (seconds: number) => {
     }
 };
 
-export const initializeGame = ({size, theme, gameIcons, setGame}:{size: string, theme: string, gameIcons: string[], setGame: React.Dispatch<React.SetStateAction<GameState[][]>>}) => {
+interface initializeGameProps {
+    size: string, 
+    theme: string, 
+    gameIcons: string[], 
+    setGame: React.Dispatch<React.SetStateAction<GameState[][]>>,
+    playerCount: number;
+    setPlayers: (value: React.SetStateAction<PlayerStats[]>) => void
+}
+
+export const initializeGame = ({size, theme, gameIcons, setGame, playerCount, setPlayers}: initializeGameProps) => {
     const gridSize = parseInt(size);
     const isGameIcons = theme == "icons";
 
@@ -64,4 +73,7 @@ export const initializeGame = ({size, theme, gameIcons, setGame}:{size: string, 
     );
     const gameArray = setupGame(gameValues);
     setGame(gameArray);
+    
+    const playerStats = setupPlayerStats(playerCount);
+    setPlayers(playerStats);
 }

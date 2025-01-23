@@ -6,6 +6,8 @@ import React from "react";
 interface AppContextProps {
     isStarted: boolean;
     setIsStarted: (isStarted: boolean) => void;
+    isRestarted: boolean;
+    setIsRestarted: (isRestarted: boolean) => void;
     isDone: boolean;
     setIsDone: (isDone: boolean) => void;
     gameSettings: GameSettings;
@@ -14,7 +16,7 @@ interface AppContextProps {
     setPlayers: React.Dispatch<React.SetStateAction<PlayerStats[]>>; 
     game: GameState[][];
     setGame: React.Dispatch<React.SetStateAction<GameState[][]>>;
-    
+
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -25,6 +27,7 @@ interface AppProviderProps {
 
 export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
     const [isStarted, setIsStarted] = useState<boolean>(false);
+    const [isRestarted, setIsRestarted] = useState<boolean>(false);
     const [isDone, setIsDone] = useState<boolean>(false);
     const [gameSettings, setGameSettings] = useState<GameSettings>({
         theme: "numbers",
@@ -38,6 +41,7 @@ export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
         <AppContext.Provider 
             value={{
                 isStarted, setIsStarted, 
+                isRestarted, setIsRestarted, 
                 isDone, setIsDone, 
                 gameSettings, setGameSettings, 
                 players, setPlayers,

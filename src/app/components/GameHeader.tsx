@@ -26,15 +26,19 @@ function HeaderButton ({label, customStyle, onClick}: HeaderButton) {
 }
 
 export default function GameHeader ({gameIcons}: {gameIcons: string[]}) {
-    const { gameSettings, setGame } = useAppContext();
+    const { gameSettings, setGame, setIsRestarted, setPlayers } = useAppContext();
     const { isMobile } = useDeviceSize();
 
     const restartGame = () => {
+        setIsRestarted(true);
+
         initializeGame({
             size: gameSettings.gridSize,
             gameIcons: gameIcons,
             theme: gameSettings.theme,
-            setGame: setGame
+            setGame: setGame,
+            playerCount: parseInt(gameSettings.playerCount),
+            setPlayers: setPlayers
         })
     }
 

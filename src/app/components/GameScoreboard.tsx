@@ -73,10 +73,10 @@ function GameCard ({label, value}: GameCardProps) {
 }
 
 export default function GameScoreboard ({currPlayer}: GameScoreboardProps) {    
-    const { players, isDone } = useAppContext();
+    const { players, isDone, isRestarted } = useAppContext();
     const { isMobile } = useDeviceSize();
     const isSinglePlayer = players.length == 1;
-    const timer = useTimer({isStopped: isDone});
+    const timer = useTimer({isStopped: isDone, isRestarted});
 
     return (
         <div className="flex justify-center gap-[24px] md:gap-[30px]">

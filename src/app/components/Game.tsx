@@ -14,7 +14,7 @@ interface GameProps {
 }
 
 export default function Game ({ gameIcons }: GameProps) {
-    const { isStarted, gameSettings, setPlayers, game, setGame } = useAppContext();
+    const { isStarted, gameSettings, setPlayers, setGame, setIsRestarted } = useAppContext();
     
     const [currPlayer, setCurrPlayer] = React.useState("1");
 
@@ -23,9 +23,11 @@ export default function Game ({ gameIcons }: GameProps) {
             size: gameSettings.gridSize,
             gameIcons: gameIcons,
             theme: gameSettings.theme,
-            setGame: setGame
+            setGame: setGame,
+            playerCount: parseInt(gameSettings.playerCount),
+            setPlayers: setPlayers
         })
-    }, [gameSettings.gridSize, gameSettings.theme, gameIcons, setGame]);
+    }, [gameSettings.gridSize, gameSettings.theme, gameIcons, setGame, gameSettings.playerCount, setPlayers]);
 
     React.useEffect(() => {
         const playerStats = setupPlayerStats(parseInt(gameSettings.playerCount));

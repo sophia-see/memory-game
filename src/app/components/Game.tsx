@@ -108,7 +108,6 @@ export default function Game ({ gameIcons }: GameProps) {
                 w-full min-h-screen max-w-[1110px] mx-auto
                 p-[24px] md:p-[40px]
                 flex flex-col justify-center
-                relative
             "
         >
             <GameHeader gameIcons={gameIcons} setCurrPlayer={setCurrPlayer}/>
@@ -125,7 +124,7 @@ export default function Game ({ gameIcons }: GameProps) {
                 >
                     <div
                         className="
-                            w-full
+                            w-full max-w-[654px]
                             mx-[24px] p-[24px]
                             bg-white-f2f
                             rounded-[10px]
@@ -190,7 +189,7 @@ export default function Game ({ gameIcons }: GameProps) {
                                 })
                             }                  
                         </div>
-                        <div className="flex flex-col gap-4 w-full">
+                        <div className="flex flex-col md:flex-row gap-4 w-full">
                             <div 
                                 className="w-full rounded-full py-[12px] text-center bg-yellow-fda text-white-fcf"
                                 onClick={restartGame}

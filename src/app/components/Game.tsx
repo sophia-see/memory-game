@@ -34,14 +34,14 @@ function PlayerResult (props: PlayerResultProps) {
             <div 
                 className={`
                     ${isHighlight ? "" : "text-blue-719"}
-                    font-bold text-[13px]
+                    font-bold text-[13px] md:text-[18px]
                 `}
             >
                 {label} {isHighlight ? "(Winner!)" : ""}
             </div>
             <div
                 className={`
-                    font-bold text-[20px]
+                    font-bold text-[20px] md:text-[32px]
                 `}
             >
                 {value}
@@ -145,24 +145,24 @@ export default function Game ({ gameIcons }: GameProps) {
                                 ?   <>
                                         <div
                                             className="
-                                                font-bold text-[24px]
+                                                font-bold text-[24px] md:text-[48px]
                                             "
                                         >
                                             You did it!
                                         </div>
-                                        <div className="font-bold text-[14px] text-blue-719">
+                                        <div className="font-bold text-[14px] md:text-[18px] text-blue-719">
                                             Game over! Here’s how you got on…
                                         </div>
                                     </>
                                 :   <>
                                         <div
                                             className="
-                                                font-bold text-[24px]
+                                                font-bold text-[24px] md:text-[48px]
                                             "
                                         >
                                             {finalResult?.isTie ? "It's a tie!" : `Player ${finalResult?.topPlayers[0].id} wins!`}
                                         </div>
-                                        <div className="font-bold text-[14px] text-blue-719">
+                                        <div className="font-bold text-[14px] md:text-[18px] text-blue-719">
                                             Game over! Here are the results…
                                         </div>
                                     </>
@@ -200,13 +200,31 @@ export default function Game ({ gameIcons }: GameProps) {
                         </div>
                         <div className="flex flex-col md:flex-row gap-4 w-full">
                             <div 
-                                className="w-full rounded-full py-[12px] text-center bg-yellow-fda text-white-fcf"
+                                className="
+                                    w-full 
+                                    rounded-full 
+                                    py-[12px] 
+                                    text-[18px] 
+                                    md:text-[20px] 
+                                    text-center 
+                                    bg-yellow-fda text-white-fcf
+                                    cursor-pointer
+                                "
                                 onClick={restartGame}
                             >
                                 Restart
                             </div>
                             <div 
-                                className="w-full rounded-full py-[12px] text-center bg-white-dfe text-blue-304"
+                                className="
+                                    w-full 
+                                    rounded-full 
+                                    py-[12px] 
+                                    text-[18px] 
+                                    md:text-[20px] 
+                                    text-center 
+                                    bg-white-dfe text-blue-304
+                                    cursor-pointer
+                                "
                                 onClick={newGame}
                             >
                                 Setup New Game

@@ -26,7 +26,12 @@ function HeaderButton ({label, customStyle, onClick}: HeaderButton) {
     )
 }
 
-export default function GameHeader ({gameIcons, setCurrPlayer}: {gameIcons: string[], setCurrPlayer: React.Dispatch<React.SetStateAction<string>>}) {
+interface GameHeaderProps {
+    gameIcons: string[];
+    setCurrPlayer: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function GameHeader ({gameIcons, setCurrPlayer}: GameHeaderProps) {
     const { gameSettings, setGame, setIsRestarted, setPlayers, setIsStarted } = useAppContext();
     const { isMobile } = useDeviceSize();
     const [isMenuOpened, setIsMenuOpened] = React.useState(false);
@@ -90,19 +95,40 @@ export default function GameHeader ({gameIcons, setCurrPlayer}: {gameIcons: stri
                         "
                     >
                         <div 
-                            className="w-full text-center rounded-full py-[12px] font-bold text-[18px] text-white-fcf bg-yellow-fda"
+                            className="
+                                w-full 
+                                text-center 
+                                rounded-full 
+                                py-[12px] 
+                                font-bold text-[18px] 
+                                text-white-fcf bg-yellow-fda
+                            "
                             onClick={restartGame}
                         >
                             Restart
                         </div>
                         <div 
-                            className="w-full text-center rounded-full py-[12px] font-bold text-[18px] text-blue-304 bg-white-dfe"
+                            className="
+                                w-full 
+                                text-center 
+                                rounded-full 
+                                py-[12px] 
+                                font-bold text-[18px] 
+                                text-blue-304 bg-white-dfe
+                            "
                             onClick={newGame}
                         >
                             New Game
                         </div>
                         <div 
-                            className="w-full text-center rounded-full py-[12px] font-bold text-[18px] text-blue-304 bg-white-dfe"
+                            className="
+                                w-full 
+                                text-center 
+                                rounded-full 
+                                py-[12px] 
+                                font-bold text-[18px] 
+                                text-blue-304 bg-white-dfe
+                            "
                             onClick={() => setIsMenuOpened(false)}
                         >
                             Resume Game

@@ -19,7 +19,9 @@ interface PlayerResultProps {
     isHighlight: boolean;
 }
 
-function PlayerResult ({label, value, isHighlight}: PlayerResultProps) {
+function PlayerResult (props: PlayerResultProps) {
+    const {label, value, isHighlight} = props;
+
     return (
         <div 
             className={`
@@ -49,7 +51,14 @@ function PlayerResult ({label, value, isHighlight}: PlayerResultProps) {
 }
 
 export default function Game ({ gameIcons }: GameProps) {
-    const { isStarted, gameSettings, players, setPlayers, setGame, isDone, isRestarted, setIsRestarted, setIsStarted, setIsDone } = useAppContext();
+    const { 
+        isStarted, setIsStarted, 
+        gameSettings, 
+        players, setPlayers, 
+        setGame, 
+        isDone, setIsDone,
+        isRestarted, setIsRestarted
+    } = useAppContext();
     
     const [currPlayer, setCurrPlayer] = React.useState("1");
     const timer = useTimer({isStopped: isDone, isRestarted: isRestarted || !isStarted});

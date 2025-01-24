@@ -57,7 +57,8 @@ interface initializeGameProps {
     setPlayers: (value: React.SetStateAction<PlayerStats[]>) => void
 }
 
-export const initializeGame = ({size, theme, gameIcons, setGame, playerCount, setPlayers}: initializeGameProps) => {
+export const initializeGame = (props: initializeGameProps) => {
+    const {size, theme, gameIcons, setGame, playerCount, setPlayers} = props;
     const gridSize = parseInt(size);
     const isGameIcons = theme == "icons";
 

@@ -68,7 +68,7 @@ function GameValue (props: GameValueProps) {
     )
 }
 
-export default function GameGrid ({ currPlayer, setCurrPlayer }:GameGridProps) {
+export default function GameGrid ({ currPlayer, setCurrPlayer } : GameGridProps) {
     const { gameSettings, setPlayers, setIsDone, game, setGame } = useAppContext();
     const [selectedPair, setSelectedPair] = React.useState<string[]>([]);
     const gridSize = parseInt(gameSettings.gridSize[0]);
@@ -130,11 +130,23 @@ export default function GameGrid ({ currPlayer, setCurrPlayer }:GameGridProps) {
     }, [game, setIsDone])
 
     return (
-        <div className={`w-full flex-1 flex flex-col justify-center items-center ${isSmallGrid ? "gap-3" : "gap-2"} my-[50px] mx-auto`}>
+        <div className={`
+            w-full 
+            flex-1 
+            flex flex-col justify-center items-center 
+            ${isSmallGrid ? "gap-3" : "gap-2"} 
+            my-[50px] mx-auto
+        `}>
             {game.map((row, rowIndex) => {
                 return (
                     <div 
-                        className={`grid ${isSmallGrid ? "gap-[12px] grid-cols-[repeat(4,minmax(auto,87px))]" : "gap-[8px] grid-cols-[repeat(6,minmax(auto,87px))]"}`}
+                        className={`
+                            grid 
+                            ${isSmallGrid 
+                                ? "gap-[12px] grid-cols-[repeat(4,minmax(auto,87px))]" 
+                                : "gap-[8px] grid-cols-[repeat(6,minmax(auto,87px))]"
+                            }
+                        `}
                         key={`row_${rowIndex}`}
                     >
                         {row.map((item, colIndex) => {

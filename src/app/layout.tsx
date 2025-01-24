@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${atkinsonSans.className} antialiased bg-white-fcf`}
+        className={`${atkinsonSans.className} antialiased bg-white-fcf h-full relative`}
       >
         <AppProvider>
           {children}

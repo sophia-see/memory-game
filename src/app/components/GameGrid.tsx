@@ -29,7 +29,7 @@ function GameValue (props: GameValueProps) {
     return (
         <motion.div
             key={`${rowIndex}-${colIndex}`} // Ensures component state consistency
-            transition={{ duration: isAnimated ? 0.6 : 0 }}
+            transition={{ duration: isAnimated ? 0.45 : 0 }}
             initial={{ rotateY: 0 }} // Start with no rotation
             animate={{ rotateY: isAnimated ? (isSelected || isOpened ? 0 : -180) : 0 }} // Flip when opened/selected, revert when false
             exit={{ rotateY: 0 }} // Ensure it flips back when removed

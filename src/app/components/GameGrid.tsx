@@ -2,6 +2,7 @@ import React from "react";
 import { useAppContext } from "../context/AppContext"
 import { GameState } from "../types";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface GameGridProps {
     currPlayer: string;
@@ -23,8 +24,16 @@ function GameValue (props: GameValueProps) {
     const item = game[rowIndex][colIndex];
     const { value, isOpened, isSelected } = item;
     const isSvg = value.includes("svg");
+
     return (
-        <div
+        <motion.div
+            key={`${rowIndex}-${colIndex}`} // Ensures component state consistency
+            transition={{ duration: 0.6 }}
+            initial={{ rotateY: 0 }} // Start with no rotation
+            // whileTap={{ rotateY: 180 }}
+            animate={{ rotateY: isSelected || isOpened ? 0 : -180 }} // Flip when opened/selected, revert when false
+            exit={{ rotateY: 0 }} // Ensure it flips back when removed
+            style={{ transformStyle: "preserve-3d" }}
             className={`
                 font-bold
                 flex items-center justify-center
@@ -64,7 +73,7 @@ function GameValue (props: GameValueProps) {
                 /> 
                 : isOpened || isSelected  ? value : ""
             }
-        </div>
+        </motion.div>
     )
 }
 
@@ -116,7 +125,7 @@ export default function GameGrid ({ currPlayer, setCurrPlayer } : GameGridProps)
 
                 setSelectedPair([]);
                 setGame(newGame)
-            }, isMatch ? 0 : 500)
+            }, isMatch ? 100 : 1000)
 
             return () => clearTimeout(timerId);
         }

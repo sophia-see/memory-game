@@ -29,10 +29,22 @@ function GameValue (props: GameValueProps) {
     return (
         <motion.div
             key={`${rowIndex}-${colIndex}`} // Ensures component state consistency
-            transition={{ duration: isAnimated ? 0.45 : 0 }}
-            initial={{ rotateY: 0 }} // Start with no rotation
-            animate={{ rotateY: isAnimated ? (isSelected || isOpened ? 0 : -180) : 0 }} // Flip when opened/selected, revert when false
-            exit={{ rotateY: 0 }} // Ensure it flips back when removed
+            transition={{ 
+                rotateY: {duration: isAnimated ? 0.45 : 0 },
+                color: {delay: isAnimated ? 0.1 : 0 },
+            }}
+            initial={{ 
+                rotateY: 0, 
+                color: "#FFFFFF" 
+            }} // Start with no rotation
+            animate={{ 
+                rotateY: isAnimated ? (isSelected || isOpened ? 0 : -180) : 0,
+                color: isAnimated ? (isSelected || isOpened ? "#FFFFFF": "#FDA214") : "#FFFFFF"
+            }} // Flip when opened/selected, revert when false
+            exit={{ 
+                rotateY: 0, 
+                color: "#FFFFFF" 
+            }} // Ensure it flips back when removed
             style={{ transformStyle: "preserve-3d" }}
             className={`
                 font-bold
@@ -130,7 +142,7 @@ export default function GameGrid ({ currPlayer, setCurrPlayer } : GameGridProps)
             return () => clearTimeout(timerId);
         }
 
-    }, [selectedPair, game, gameSettings, currPlayer, setCurrPlayer, setPlayers, setGame]);
+    }, [selectedPair, game, gameSettings, currPlayer, setCurrPlayer, setPlayers, setGame, isAnimated]);
 
     React.useEffect(() => {
         const remainingUnmatched = game.flatMap(row => row).filter(i => !i.isOpened)

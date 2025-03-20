@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import { useAppContext } from "../context/AppContext"
 import { GameSettings } from "../types"
+import AnimationSwitch from "./AnimationSwitch"
 
 interface ManuLabelProps {
     label: string
@@ -74,7 +75,7 @@ function MenuItem ({children}: Readonly<MenuItemProps>) {
 }
 
 export default function Menu () {
-    const { gameSettings, setGameSettings, setIsStarted } = useAppContext();
+    const { gameSettings, setGameSettings, setIsStarted, isAnimated, setIsAnimated } = useAppContext();
 
     return (
         <div 
@@ -102,6 +103,7 @@ export default function Menu () {
                         flex flex-col gap-[24px]
                     "
                 >
+                    <AnimationSwitch isAnimated={isAnimated} setIsAnimated={setIsAnimated}/>
                     <MenuItem>
                         <MenuLabel label="Select Theme" />
                         <MenuValues>

@@ -16,11 +16,12 @@ interface GameValueProps {
     selectedPair: string[];
     setSelectedPair: React.Dispatch<React.SetStateAction<string[]>>
     isSmallGrid: boolean;
+    isAnimated: boolean;
     setGame: React.Dispatch<React.SetStateAction<GameState[][]>>;
 }
 
 function GameValue (props: GameValueProps) {
-    const {rowIndex, colIndex, game, selectedPair, setSelectedPair, isSmallGrid, setGame} = props;
+    const {rowIndex, colIndex, game, selectedPair, setSelectedPair, isSmallGrid, setGame,isAnimated} = props;
     const item = game[rowIndex][colIndex];
     const { value, isOpened, isSelected } = item;
     const isSvg = value.includes("svg");
@@ -28,10 +29,9 @@ function GameValue (props: GameValueProps) {
     return (
         <motion.div
             key={`${rowIndex}-${colIndex}`} // Ensures component state consistency
-            transition={{ duration: 0.6 }}
+            transition={{ duration: isAnimated ? 0.6 : 0 }}
             initial={{ rotateY: 0 }} // Start with no rotation
-            // whileTap={{ rotateY: 180 }}
-            animate={{ rotateY: isSelected || isOpened ? 0 : -180 }} // Flip when opened/selected, revert when false
+            animate={{ rotateY: isAnimated ? (isSelected || isOpened ? 0 : -180) : 0 }} // Flip when opened/selected, revert when false
             exit={{ rotateY: 0 }} // Ensure it flips back when removed
             style={{ transformStyle: "preserve-3d" }}
             className={`
@@ -78,7 +78,7 @@ function GameValue (props: GameValueProps) {
 }
 
 export default function GameGrid ({ currPlayer, setCurrPlayer } : GameGridProps) {
-    const { gameSettings, setPlayers, setIsDone, game, setGame } = useAppContext();
+    const { gameSettings, setPlayers, setIsDone, game, setGame, isAnimated } = useAppContext();
     const [selectedPair, setSelectedPair] = React.useState<string[]>([]);
     const gridSize = parseInt(gameSettings.gridSize[0]);
     const isSmallGrid = gridSize == 4;
@@ -125,7 +125,7 @@ export default function GameGrid ({ currPlayer, setCurrPlayer } : GameGridProps)
 
                 setSelectedPair([]);
                 setGame(newGame)
-            }, isMatch ? 100 : 1000)
+            }, isMatch ? (isAnimated ? 100 : 0) : (isAnimated ? 700: 500))
 
             return () => clearTimeout(timerId);
         }
@@ -168,6 +168,7 @@ export default function GameGrid ({ currPlayer, setCurrPlayer } : GameGridProps)
                                     selectedPair={selectedPair}
                                     setSelectedPair={setSelectedPair}
                                     isSmallGrid={isSmallGrid} 
+                                    isAnimated={isAnimated}
                                     key={`item_${colIndex}`}
                                 />
                             )

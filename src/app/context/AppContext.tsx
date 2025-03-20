@@ -16,6 +16,8 @@ interface AppContextProps {
     setPlayers: React.Dispatch<React.SetStateAction<PlayerStats[]>>; 
     game: GameState[][];
     setGame: React.Dispatch<React.SetStateAction<GameState[][]>>;
+    isAnimated: boolean;
+    setIsAnimated: (value: boolean) => void;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -35,6 +37,7 @@ export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
     });
     const [players, setPlayers] = React.useState<PlayerStats[]>([]);
     const [game, setGame] = React.useState<GameState[][]>([]);
+    const [isAnimated, setIsAnimated] = React.useState<boolean>(true);
 
     return (
         <AppContext.Provider 
@@ -44,7 +47,8 @@ export const AppProvider = ({children}: Readonly<AppProviderProps>) => {
                 isDone, setIsDone, 
                 gameSettings, setGameSettings, 
                 players, setPlayers,
-                game, setGame
+                game, setGame,
+                isAnimated, setIsAnimated,
             }}>
             {children}
         </AppContext.Provider>

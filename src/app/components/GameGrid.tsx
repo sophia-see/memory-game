@@ -55,6 +55,7 @@ function GameValue (props: GameValueProps) {
                 p-2 aspect-square
                 min-w-[45px] min-h-[45px] max-w-[87px]
                 rounded-full
+                select-none
             `}
             onClick={() => {
                 if (selectedPair.length < 2 && !isSelected) {
@@ -79,7 +80,7 @@ function GameValue (props: GameValueProps) {
                     layout="responsive" 
                     width={1} 
                     height={1} 
-                    className={`${isSmallGrid ? "p-3" : "p-[6px]"} ${isOpened || isSelected ? "" : "hidden"}`}
+                    className={`${isSmallGrid ? "p-3" : "p-[6px]"} ${isOpened || isSelected ? "" : "hidden"} select-none`}
                     priority
                     loading="eager"
                 /> 

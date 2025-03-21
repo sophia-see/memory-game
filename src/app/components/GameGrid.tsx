@@ -74,16 +74,26 @@ function GameValue (props: GameValueProps) {
             }}
         >
             {isSvg 
-                ? <Image 
-                    src={`./images/${value}`} 
-                    alt="icon" 
-                    layout="responsive" 
-                    width={1} 
-                    height={1} 
-                    className={`${isSmallGrid ? "p-3" : "p-[6px]"} ${isOpened || isSelected ? "" : "hidden"} select-none`}
-                    priority
-                    loading="eager"
-                /> 
+                ? 
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: isAnimated ? (isSelected || isOpened ? 1 : 0) : 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ delay: 0.1 }}
+                        style={{ display: isAnimated ? (isSelected || isOpened ? "block" : "none") : "block" }}
+                    >
+                        <Image 
+                            src={`./images/${value}`} 
+                            alt="icon" 
+                            layout="responsive" 
+                            width={1} 
+                            height={1} 
+                            className={`${isSmallGrid ? "p-3" : "p-[6px]"} select-none`}
+                            priority
+                            loading="eager"
+                        /> 
+                    </motion.div>
+
                 : isOpened || isSelected  ? value : ""
             }
         </motion.div>
